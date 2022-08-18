@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="index, follow">
+
+        <!-- HTML Meta Tags -->
+        <title>Pomodoro Timer</title>
+        <meta name="description" content="">
+
+        <!-- Facebook Meta Tags -->
+        <meta property="og:url" content="https://pomodoro.jamesvincentdesign.com/">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Pomodoro Timer">
+        <meta property="og:description" content="Increase your productivity with this free Pomodoro Timer. It is customizable to your liking and will store your settings locally. Start using the Pomodoro Technique today!"">
+        <meta property="og:image" content="https://pomodoro.jamesvincentdesign.com/img/pomodoroScreenCap.png">
+
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:domain" content="pomodoro.jamesvincentdesign.com">
+        <meta property="twitter:url" content="https://pomodoro.jamesvincentdesign.com/">
+        <meta name="twitter:title" content="Pomodoro Timer">
+        <meta name="twitter:description" content="Increase your productivity with this free Pomodoro Timer. It is customizable to your liking and will store your settings locally. Start using the Pomodoro Technique today!"">
+        <meta name="twitter:image" content="https://pomodoro.jamesvincentdesign.com/img/pomodoroScreenCap.png">
+
+        <!-- favicon and styles  -->
+        <link rel="shortcut icon" href="./img/tomato.svg" type="image/x-icon">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>pomodoro</h1>
+        </header>
+        <main>
+        <div id="timer">
+            <h2 id="timerState"></h2>
+            <svg version="1.1" id="circPathBottom" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+            <path class="st2" d="M8.1,1.8C4.7,1.8,2,4.5,2,7.9S4.7,14,8.1,14s6.1-2.7,6.1-6.1C14.2,4.5,11.5,1.8,8.1,1.8"/>
+            </svg>
+            <svg version="1.1" id="circPath" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	        viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+            <path class="st0" d="M8.1,1.8C4.7,1.8,2,4.5,2,7.9S4.7,14,8.1,14s6.1-2.7,6.1-6.1C14.2,4.5,11.5,1.8,8.1,1.8"/>
+            </svg>
+            <svg version="1.1" id="circPath2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	        viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+            <path class="st1" d="M8.1,1.8C4.7,1.8,2,4.5,2,7.9S4.7,14,8.1,14s6.1-2.7,6.1-6.1C14.2,4.5,11.5,1.8,8.1,1.8"/>
+            </svg>
+            <span class="timer-display" id="displayMinutes"></span>
+            <span class="timer-colon">:</span>
+            <span class="timer-display" id="displaySeconds"></span>
+        </div>
+        <p id="pomoText"></p>
+        <div class="pomo-container">
+            <!-- tomato pics will go here  -->
+        </div>
+        </main>
+        <footer>
+        <div class="controls">
+            <!-- volume control  -->
+            <div id="volBtn" class="control-icon vol" title="click to toggle volume">
+                <input class="display-none" type="range" id="volume" name="volume" step="0.1" min="0" max="1">
+            </div>
+            <!-- start / stop btn  -->
+            <button class="btn" id="startBtn">start timer</button>
+            <button class="btn" id="stopBtn">reset timer</button>
+            <!-- settings button  -->
+            <div id="settingsBtn" class="control-icon settings" title="click to toggle volume"></div>
+        </div>
+        </footer>
+        <!-- settings  -->
+        <div class="settings-form" id="setForm">
+            <form class="form" action="">
+                <div class="close-settings" id="closeSetBtn">
+                    <div id="xOne" class="x-one"></div>
+                    <div id="xTwo" class="x-two"></div>
+                </div>
+                <label class="form-label" for="work-min">enter work minutes</label>
+                <input class="user-selection work-min" type="number" step="1" name="work-min" id="workMinput" value="25" min="1" max="59">
+                <label class="form-label" for="short-min">enter short break length</label>
+                <input class="user-selection short-min" type="number" name="short-min" id="shortMinput" value="5" min="1" max="59">
+                <label class="form-label" for="long-min">enter long break length</label>
+                <input class="user-selection long-min" type="number" name="long-min" id="longMinput" value="30" min="1" max="59">
+                <label class="form-label" for="reps">how many times would you like to run the timer?</label>
+                <input class="user-selection reps" type="number" name="reps" id="reps" value="1" min="1" max="59">
+                <p class="form-notice">* settings cannot be updated while timer is running</p>
+            </form>
+        </div>
+        <script src="app.js"></script>
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "WebApplication",
+                "name": "Pomodoro Timer",
+                "author": "James Vincent",
+                "url": "https://www.pomodoro.jamesvincentdesign.com",
+                "image": "https://pomodoro.jamesvincentdesign.com/img/pomodoroScreenCap.png",
+                "description": "Increase your productivity with this free Pomodoro Timer. It is customizable to your liking and will store your settings locally. Start using the Pomodoro Technique today!",
+                "applicationCategory": "Game",
+                "genre": "productivity",
+                "about": {
+                  "@type": "Thing",
+                  "description": "javascript,productivity,pomodoro,pomodoro-timer,pomodoro-technique,time-management,time"
+                },
+                "browserRequirements": "Requires JavaScript. Requires HTML5.",
+                "softwareVersion": "1.0.0",
+                "operatingSystem": "All"
+              }
+        </script>
+    </body>
+</html>
