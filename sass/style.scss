@@ -1,319 +1,403 @@
 @font-face {
-    font-family: 'malisemibold';
-    src: url('../fonts/webMali/mali-semibold-webfont.woff2') format('woff2'),
-         url('../fonts/webMali/mali-semibold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "malisemibold";
+  src: url("../fonts/webMali/mali-semibold-webfont.woff2") format("woff2"),
+    url("../fonts/webMali/mali-semibold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
-    font-family: 'ubunturegular';
-    src: url('../fonts/webUbuntu/ubuntu-regular-webfont.woff2') format('woff2'),
-         url('../fonts/webUbuntu/ubuntu-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: "ubunturegular";
+  src: url("../fonts/webUbuntu/ubuntu-regular-webfont.woff2") format("woff2"),
+    url("../fonts/webUbuntu/ubuntu-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-$pomo-font: 'malisemibold', cursive;
-$body-font: 'ubunturegular', sans-serif;
-$bg-one: #F2F0EA;
+$pomo-font: "malisemibold", cursive;
+$body-font: "ubunturegular", sans-serif;
+$bg-one: #f2f0ea;
 $tomato-red: #fa7238;
 $mid-grn: #25e24e;
 $beige-gray: #e4ded5;
 $orange-yellow: #f9d685;
 $clock-face-color: #fff;
+$dark-grey: #a9a9a9bb;
 
-
-
-input[type=range] {
-    -webkit-appearance: none;
-    border-radius: 10px;
-
-    &:focus {
-        outline: none;
-      }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 15px;
-    width: 15px;
-    background-color: $tomato-red;
-    border-radius: 10px;
+
+input[type="range"] {
+  -webkit-appearance: none;
+  border-radius: 10px;
+  height: min-content;
+  width: min-content;
+  &:focus {
+    outline: none;
+  }
 }
-    
-body{
-    h1{
-        font-family: $pomo-font;
-        -webkit-user-select: none;        
-        -moz-user-select: none; 
-        -ms-user-select: none;
-        user-select: none;
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  background-color: $tomato-red;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.theme-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+  min-height: 300px;
+  width: 100vw;
+  // min-width: 260px;
+  //   min-height: 667px;
+  background: $bg-one;
+  background-color: $bg-one;
+  background-image: radial-gradient(#2f1205 0.5px, $bg-one 0.5px);
+  background-size: 5px 5px;
+  font-family: $body-font;
+  overflow: hidden;
+
+  h1 {
+    font-family: $pomo-font;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-top: 1em;
+  }
+
+  .clockface {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  #pomoText {
+    font-size: 0.75em;
+    height: 0.75em;
+  }
+
+  .pomo-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -1em;
+    height: 2em;
+
+    .pomo {
+      margin: 0 1em;
+      height: 100%;
     }
-    margin: 0;
+  }
+  main {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
-    min-height: 667px;
-    background: $bg-one;
-    font-family: $body-font;
+  }
+  footer {
+    margin-bottom: 2em;
+  }
+}
 
-    #pomoText{
-        font-size: 0.75em;
-        height: 0.75em;
+/// helpers //////////////////////////////////////////////////////////
+///
+///
+
+.flash {
+  animation: flash 1s ease infinite;
+}
+
+.user-select-none {
+  user-select: none;
+}
+
+.block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.rotate-clkwise {
+  transform: rotate(45deg);
+}
+
+.rotate-counter {
+  transform: rotate(-45deg);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.stroke-green {
+  stroke: $mid-grn !important;
+}
+.stroke-tomato {
+  stroke: $tomato-red !important;
+}
+
+#timer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 5em;
+  width: 5em;
+  font-size: 3em;
+  padding: 1em;
+  border-radius: 50%;
+  background: $clock-face-color;
+  box-shadow: 0 0 20px 10px $dark-grey;
+
+  .st0,
+  .st1,
+  .st2 {
+    fill: none;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-dasharray: 38.5;
+    stroke-dashoffset: 0;
+    transition: all 0.25s ease;
+  }
+
+  #circPath {
+    position: absolute;
+    width: 130%;
+
+    .st0 {
+      stroke: $tomato-red;
+      stroke-width: 0.5;
     }
+  }
 
-    .pomo-container{
-        display: flex;
-        justify-content: space-between;
-        margin-top: -1em;
-        
-        .pomo{
-            margin: 0 1em;
-            height: 3em;
-        }
+  #circPath2 {
+    position: absolute;
+    width: 120%;
+
+    .st1 {
+      stroke: $orange-yellow;
+      stroke-width: 0.25;
     }
-    main{
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
+  }
+
+  #circPathBottom {
+    position: absolute;
+    width: 130%;
+
+    .st2 {
+      stroke: $beige-gray;
+      stroke-width: 0.5;
     }
-    footer{
-        margin-bottom: 2em;
-    }
+  }
+
+  #timerState {
+    position: absolute;
+    bottom: 3.5rem;
+    height: 1em;
+    font-size: 1rem;
+  }
+
+  .timer-display {
+    margin-top: -8px;
+  }
+  .timer-colon {
+    margin-top: -15px;
+  }
 }
 
-/// helpers
-.block{
-    display: block;
+.pomo {
+  height: 1em;
+  font-size: 1em;
 }
 
-.display-none{
-    display: none;
+.btn {
+  padding: 0;
+  border: 0;
+  border-radius: 1em;
+  cursor: pointer;
+  background-color: transparent;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: none !important;
+  }
 }
 
-.rotate-clkwise{
-    transform: rotate(45deg);
+#startBtn {
+  height: 4em;
+  width: 4em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(../img/play.svg);
+  &.pause-icon {
+    background-image: url(../img/pause.svg) !important;
+  }
 }
 
-.rotate-counter{
-    transform: rotate(-45deg);
+#resetBtn {
+  height: 3em;
+  width: 3em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(../img/arrow-counterclockwise.svg) !important;
 }
 
-.hidden{
-    visibility: hidden;
-}
+.controls {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100vw;
+  max-width: 1000px;
 
-#timer{
+  .vol-wrapper {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+    #volume {
+      position: absolute;
+      z-index: -2;
+      transform: translate(-44px, -127px) rotate(-90deg);
+      cursor: pointer;
+      &:focus {
+        z-index: 1;
+      }
+    }
+  }
+
+  .control-icon {
     height: 3em;
     width: 3em;
-    padding: 1em;
-    border-radius: 50%;
-    background: $clock-face-color;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-    #circPath{
-        position: absolute;
-        width: 130%;
-        
-        .st0{
-            transition: all 0.5s ease;
-            fill:none;
-            stroke: $tomato-red;
-            stroke-width:0.5;
-            stroke-linecap:round;
-            stroke-miterlimit:10;
-            stroke-dasharray: 38.5;
-            stroke-dashoffset: 0;
-        }
-        
+    &:hover {
+      cursor: pointer;
     }
-    
-    #circPath2{
-        position: absolute;
-        width: 120%;
-        
-        .st1{
-            transition: all 0.5s ease;
-            fill:none;
-            stroke: $orange-yellow;
-            stroke-width:0.25;
-            stroke-linecap:round;
-            stroke-miterlimit:10;
-            stroke-dasharray: 38.5;
-            stroke-dashoffset: 0;
-        }
-    }
-    
-    #circPathBottom{
-        position: absolute;
-        width: 130%;
-        
-        .st2{
-            transition: all 0.5s ease;
-            fill:none;
-            stroke: $beige-gray;
-            stroke-width:0.5;
-            stroke-linecap:round;
-            stroke-miterlimit:10;
-            stroke-dasharray: 38.5;
-            stroke-dashoffset: 0;
-        }
-    }
-    
-    #timerState{
-        position: absolute;
-        bottom: 3.5rem;
-        height: 1em;
-        font-size: 1rem;
-    }
+  }
 
-    .timer-display{
-        margin-top: -8px;
-    }
-    .timer-colon{
-        margin-top: -15px;
-    }
+  .muted {
+    padding: 3px;
+    background-image: url(../img/volume-mute.svg) !important;
+  }
+
+  #volBtn {
+    padding: 3px;
+    display: block;
+    background-image: url(../img/volume-up.svg);
+  }
+  .settings {
+    height: 2em;
+    width: 2em;
+    background-image: url(../img/gear.svg);
+  }
 }
 
+.open-settings {
+  bottom: 0 !important;
+}
 
-.pomo{
-    height: 1em;
+.settings-form {
+  position: absolute;
+  border-radius: 2em 2em 0 0;
+  bottom: -100%;
+  width: 100vw;
+  transition: bottom 0.75s ease-in-out;
+  box-shadow: 0px 0px 10px 2.5px rgba(0, 0, 0, 0.1);
+
+  .user-selection {
+    display: block;
+    margin: 1em auto;
     font-size: 1em;
-}
+    padding: 0.5em;
+    text-align: center;
+    font-size: 1.2em;
+    border-radius: 10px;
+    border: 1px solid #666;
 
-.btn{
-    padding: 1em;
-    border: 1px solid black;
-    border-radius: 1em;
-
-    &:hover,
-    &:active{
-        transform: scale(.95);
-        cursor: pointer;
-        border: 1px solid rgba(0, 0, 0, 0.5);
+    &:focus-visible {
+      outline-color: $mid-grn;
+      outline-offset: -3px;
     }
-}
+  }
 
-#volBtn{
+  .form {
     position: relative;
-    #volume{
-        transform: rotate(-90deg);
-        position: absolute;
-        bottom: 104px;
-        left: -51px;
-    }
-}
+    display: block;
+    background: #fff;
+    padding: 1em;
+    border-radius: inherit;
+    padding-top: 3em;
 
-.controls{
-    display: flex;
-    justify-content: space-evenly;
-    width: 100vw;
-    
-    .control-icon{
-        height: 2.5em;
-        width: 2.5em;
-        background-repeat: no-repeat;
-        background-size: cover;
-    
-        &:hover{
-            cursor: pointer;
-        }
-    
+    .form-notice {
+      font-size: 0.625em;
     }
-    
-    .vol{
-        background-image: url(../img/volume-up.svg);
-    }
-    .muted{
-        background-image: url(../img/volume-mute.svg);
-    }
-    .settings{
-        height: 2em;
-        width: 2em;
-        background-image: url(../img/sliders.svg);
-    }
-}
+  }
+  .form-label {
+    display: block;
+    text-align: center;
+    text-transform: capitalize;
+  }
 
-
-
-.settings-form{
-    display: none;
+  .close-settings {
+    width: 25px;
+    height: 25px;
     position: absolute;
-    bottom: -472px;
-    width: 100vw;
-    transition: all 0.5s ease-in-out;
-    box-shadow: 0px 0px 10px 2.5px rgba(0,0,0,0.1);
+    top: 2em;
+    right: 2em;
+    cursor: pointer;
 
-    .user-selection{
-        display: block;
-        margin: 1em auto;
-        font-size: 1em;
-        padding: 0.5em;
-        text-align: right;
-
-        &:focus-visible{
-            outline-color: $mid-grn;
-        }
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 2.5px);
+      left: 0;
+      width: 100%;
+      height: 2.5px;
+      background: currentColor;
+      transform-origin: center;
+      transition: rotate 0.5s ease-in-out;
     }
-
-    .form{
-        display: block;
-        background: #fff;
-        padding: 1em;
-
-        .form-notice{
-            font-size: 0.625em;
-        }
-
+    &:before {
+      rotate: -45deg;
     }
-    .form-label{
-        display: block;
-        text-align: center;
+    &:after {
+      rotate: 45deg;
     }
-
-    .close-settings{
-        width: 40px;
-        height: 40px;
-        position: relative;
-        left: 85%;
-        top: 10px;
-
-        
-        .x-one,
-        .x-two{
-            position: absolute;
-            top: calc(50% - 2.5px);
-            left: 0;
-            width: 100%;
-            height: 2.5px;
-            background: #000;
-            transform-origin: center;
-            transition: all 0.75s ease-in-out;
-        }
+    &:focus {
+      &:before,
+      &:after {
+        rotate: none;
+      }
     }
+  }
 }
 
-
-@media screen and (min-width: 280px) {
-    body{
-        overflow: hidden;
-        overflow-y: scroll;
-    }
-    #timer{
-        font-size: 3em;
-    }
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
+
 @media screen and (min-width: 376px) {
-    #timer{
-        font-size: 4em;
-    }
+  #timer {
+    font-size: 4em;
+  }
 }
